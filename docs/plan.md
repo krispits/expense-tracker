@@ -37,17 +37,18 @@ app.py:
     delite_expense(expenses) - saraksts no kura lietotājs var izvēlēties dzēšamo
     export_menu(expenses) - eksportē CSV failu
 
+                              
                                 D. Lietotāja scenāriji.
 
-Scenārijs 1 — Izdevuma pievienošana
+Scenārijs 1: Izdevuma pievienošana
     Lietotājs palaiž programmu un izvēlas "Pievienot izdevumu". Programma jautā datumu (piedāvā šodienu kā noklusējumu), kategoriju no saraksta, summu un aprakstu. Pēc ievades programma apstiprina: Pievienots: 2025-03-10 | Ēdiens | 5.20 EUR | Saldēta lazanja.
-Scenārijs 2 — Mēneša pārskats
+Scenārijs 2: Mēneša pārskats
     Lietotājs izvēlas  "Filtrēt pēc mēneša". Programma parāda pieejamos mēnešus (2025-02, 2025-03), lietotājs izvēlas vienu, un programma izvada tikai tā mēneša izdevumus ar kopsummu apakšā.
-Scenārijs 3 — Nepareiza ievade
+Scenārijs 3: Nepareiza ievade
     Lietotājs laukā "Summa" ieraksta "divi". Programma neapstājas — tā parāda kļūdas paziņojumu "Summai jābūt pozitīvam skaitlim". un ļauj mēģināt vēlreiz.
 
                                 E. Robežgadījumi
 
 Saraksts ir tukšs (parādīt) - izvada "Nav ierakstu" un atgriež izvēlnē
 Saraksts ir tukšs (dzēst) - izvada "Nav dzēšamo failu" un atgriež izvēlnē
-Nederīgu datu ievade - pieprasa ievadīt vēlreiz / piedāvā iespēju atgriesties izvēlnē
+Nederīgu datu ievade - pieprasa ievadīt vēlreiz / piedāvā iespēju atgriesties izvēlnē.
