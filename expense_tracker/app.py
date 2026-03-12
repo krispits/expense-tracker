@@ -205,8 +205,9 @@ def export_menu(expenses):
                 print(f"Ievadi skaitli no 1 lidz {len(months)}.")
     elif choice == "3":
         filtered = expenses
+
     else:
-        return
+        return # nepareiza izvēle, atgriežamies sākuma izvēlnē
 
     filename = input("Faila nosaukums [izdevumi.csv]: ") or "izdevumi.csv"
     if not filename.endswith(".csv"):
