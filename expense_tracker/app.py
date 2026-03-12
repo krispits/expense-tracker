@@ -1,6 +1,6 @@
 from storage import load_expenses, save_expenses
-from logic import filter_by_month, sum_total, sum_by_category, get_available_months
-from datetime import date
+from logic import sum_total
+from datetime import date, datetime
 
 CATEGORIES = [
     "Ediens",
@@ -22,17 +22,33 @@ def show_menu():
 def add_expense(expenses):
     """Ievada jaunu izdevumu ar validaciju."""
     today = date.today().strftime("%Y-%m-%d")
-    date_input = input(f"Datums (YYYY-MM-DD) [{today}] (0 - atpakal): ") or today
-    if date_input == "0":
-        return
+    while True:
+        date_input = input(f"Datums (YYYY-MM-DD) [{today}] (0 - atpakal): ") or today
+        if date_input == "0":
+            return
+        try:
+            datetime.strptime(date_input, "%Y-%m-%d")
+            break
+        except ValueError:
+            print("Nepareizs datums. Ievadi formata YYYY-MM-DD, piemeram: 2025-03-12")
 
     print("\nKategorija:")
     for i, cat in enumerate(CATEGORIES, 1):
         print(f"  {i}) {cat}")
-    cat_input = input("Izvēlies (1-7) (0 - atpakal): ")
-    if cat_input == "0":
-        return
-    category = CATEGORIES[int(cat_input) - 1]
+
+    while True:
+        cat_input = input("Izvēlies (1-7) (0 - atpakal): ")
+        if cat_input == "0":
+            return
+        try:
+            cat_index = int(cat_input) - 1
+            if 0 <= cat_index < len(CATEGORIES):
+                category = CATEGORIES[cat_index]
+                break
+            else:
+                print("Ievadi skaitli no 1 lidz 7.")
+        except ValueError:
+            print("Ievadi skaitli no 1 lidz 7.")
 
     while True:
         amount_input = input("Summa (EUR) (0 - atpakal): ")
