@@ -4,7 +4,7 @@ Komandrindas Python lietojums personīgo izdevumu uzskaitei un analīzei.
 
 Uzstādīšana:
 
-    git clone https://github.com/krispits/expense_tracker.git
+    git clone https://github.com/krispits/expense-tracker.git
     cd expense_tracker
     python expense_tracker/app.py
 
@@ -36,5 +36,5 @@ README.md
 
 
 
-Autors
+Autors:
 Kristaps Ezeriņš — FITA studiju ietvaros "Programmēšanas pamati", 2026
