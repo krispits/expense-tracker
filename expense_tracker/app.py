@@ -155,15 +155,62 @@ def delete_expense(expenses):
                 print("Visi izdevumi dzesti.")
             return
 def export_menu(expenses):
-    """Jautā faila nosaukumu, eksporte CSV."""
+    """Jautā eksporta veidu un eksporte CSV."""
     if not expenses:
         print("Nav ko eksportēt.")
         return
+    print("\n1) Eksportēt pec kategorijas")
+    print("2) Eksportēt pec menesa")
+    print("3) Eksportēt visu")
+    print("0) Atpakal")
+    choice = input("\nIzvēlies (0-3): ")
+    if choice == "0":
+        return
+    elif choice == "1":
+        print("\nKategorijas:")
+        for i, cat in enumerate(CATEGORIES, 1):
+            print(f"  {i}) {cat}")
+        while True:
+            cat_input = input("Izvēlies (1-7) (0 - atpakal): ")
+            if cat_input == "0":
+                return
+            try:
+                cat_index = int(cat_input) - 1
+                if 0 <= cat_index < len(CATEGORIES):
+                    category = CATEGORIES[cat_index]
+                    filtered = [e for e in expenses if e["category"] == category]
+                    break
+                else:
+                    print("Ievadi skaitli no 1 lidz 7.")
+            except ValueError:
+                print("Ievadi skaitli no 1 lidz 7.")
+    elif choice == "2":
+        months = get_available_months(expenses)
+        print("\nPieejamie menesi:")
+        for i, (year, month) in enumerate(months, 1):
+            print(f"  {i}) {year}-{month:02d}")
+        while True:
+            month_input = input("Izvēlies menesi (0 - atpakal): ")
+            if month_input == "0":
+                return
+            try:
+                index = int(month_input) - 1
+                if 0 <= index < len(months):
+                    year, month = months[index]
+                    filtered = filter_by_month(expenses, year, month)
+                    break
+                else:
+                    print(f"Ievadi skaitli no 1 lidz {len(months)}.")
+            except ValueError:
+                print(f"Ievadi skaitli no 1 lidz {len(months)}.")
+    elif choice == "3":
+        filtered = expenses
+
     filename = input("Faila nosaukums [izdevumi.csv]: ") or "izdevumi.csv"
     if not filename.endswith(".csv"):
         filename += ".csv"
-    export_to_csv(expenses, filename)
-    print(f"Eksportets: {len(expenses)} ieraksti -> {filename}")   
+    export_to_csv(filtered, filename)
+    print(f"Eksportets: {len(filtered)} ieraksti -> {filename}")  
 
 def main():
     expenses = load_expenses()
