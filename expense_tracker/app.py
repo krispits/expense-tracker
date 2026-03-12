@@ -142,20 +142,16 @@ def delete_expense(expenses):
     for i, exp in enumerate(expenses, 1):
         print(f"  {i}) {exp['date']} | {exp['amount']:.2f} EUR | {exp['category']} | {exp['description']}")
     while True:
-        choice = input("Kuru dzēst? (numurs vai 0 - atpakaļ): ")
+        choice = input("Kuru dzēst? (numurs, 0 - atpakaļ, ALL - visu): ")
         if choice == "0":
             return
-        try:
-            index = int(choice) - 1
-            if 0 <= index < len(expenses):
-                removed = expenses.pop(index)
+        if choice.upper() == "ALL":
+            confirm = input("Vai tiešam dzēst visus? (j/n): ")
+            if confirm.lower() == "j":
+                expenses.clear()
                 save_expenses(expenses)
-                print(f"Dzests: {removed['date']} | {removed['amount']:.2f} EUR | {removed['category']} | {removed['description']}")
-                break
-            else:
-                print(f"Ievadi skaitli no 1 lidz {len(expenses)}.")
-        except ValueError:
-            print(f"Ievadi skaitli no 1 lidz {len(expenses)}.")
+                print("Visi izdevumi dzesti.")
+            return
 
 def main():
     expenses = load_expenses()
