@@ -1,6 +1,9 @@
 import json
+import os
 
-FILENAME = "expenses.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FILENAME = os.path.join(BASE_DIR, "expenses.json")
+
 
 def load_expenses():
     """Nolasa expenses.json; ja faila nav vai ir tukss — atgriez tuksu sarakstu."""
