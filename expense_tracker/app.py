@@ -1,6 +1,7 @@
 from storage import load_expenses, save_expenses
 from logic import sum_total, filter_by_month, sum_by_category, get_available_months
 from datetime import date, datetime
+from export import export_to_csv
 
 CATEGORIES = [
     "Ediens",
@@ -19,6 +20,7 @@ def show_menu():
     print("3) Filtrēt pec mēneša")
     print("4) Kopsavilkums pa kategorijām")
     print("5) Dzēst izdevumu")
+    print("6) Eksportēt CSV")
     print("7) Iziet")
     return input("\nIzvēlies darbību (1-7): ")
 
@@ -26,12 +28,12 @@ def add_expense(expenses):
     """Ievada jaunu izdevumu / validācija."""
     today = date.today().strftime("%Y-%m-%d")
     while True:
-        date_input = input(f"Datums (YYYY-MM-DD vai DD.MM.YYYY) vai enter [{today}] (0 - atpakal): ") or today
+        date_input = input(f"Datums (YYYY-MM-DD) vai enter [{today}] (0 - atpakal): ") or today
         if date_input == "0":
             return
         try:
             if "." in date_input:
-                date_input = datetime.strptime(date_input, "%d.%m.%Y").strftime("%Y-%m-%d")
+                date_input = datetime.strptime(date_input, "%Y.%m.%d").strftime("%Y-%m-%d")
             else:
                 datetime.strptime(date_input, "%Y-%m-%d")
             break
@@ -152,6 +154,16 @@ def delete_expense(expenses):
                 save_expenses(expenses)
                 print("Visi izdevumi dzesti.")
             return
+def export_menu(expenses):
+    """Jautā faila nosaukumu, eksporte CSV."""
+    if not expenses:
+        print("Nav ko eksportēt.")
+        return
+    filename = input("Faila nosaukums [izdevumi.csv]: ") or "izdevumi.csv"
+    if not filename.endswith(".csv"):
+        filename += ".csv"
+    export_to_csv(expenses, filename)
+    print(f"Eksportets: {len(expenses)} ieraksti -> {filename}")   
 
 def main():
     expenses = load_expenses()
@@ -167,6 +179,8 @@ def main():
             category_summary(expenses)
         elif choice == "5":
             delete_expense(expenses)
+        elif choice == "6":
+            export_menu(expenses)
         elif choice == "7":
             print("Programma ir izslēgta, uz redzēšanos!")
             break
