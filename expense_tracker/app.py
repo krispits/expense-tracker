@@ -4,7 +4,7 @@ from datetime import date, datetime
 from export import export_to_csv
 
 CATEGORIES = [
-    "Ediens",
+    "Ēdiens",
     "Transports",
     "Izklaide",
     "Komunālie maksājumi",
@@ -16,7 +16,7 @@ CATEGORIES = [
 def show_menu():
     """Parāda galveno izveli un atgriež lietotāja izvēli."""
     print("\n1) Pievienot izdevumu")
-    print("2) Paradīt izdevumus")
+    print("2) Parādīt izdevumus")
     print("3) Filtrēt pec mēneša")
     print("4) Kopsavilkums pa kategorijām")
     print("5) Dzēst izdevumu")
@@ -28,7 +28,7 @@ def add_expense(expenses):
     """Ievada jaunu izdevumu / validācija."""
     today = date.today().strftime("%Y-%m-%d")
     while True:
-        date_input = input(f"Datums (YYYY-MM-DD) vai enter [{today}] (0 - atpakal): ") or today
+        date_input = input(f"Datums (YYYY-MM-DD) vai enter [{today}] (0 - atpakaļ): ") or today
         if date_input == "0":
             return
         try:
@@ -45,7 +45,7 @@ def add_expense(expenses):
         print(f"  {i}) {cat}")
 
     while True:
-        cat_input = input("Izvēlies (1-7) (0 - atpakal): ")
+        cat_input = input("Izvēlies (1-7) (0 - atpakaļ): ")
         if cat_input == "0":
             return
         try:
@@ -59,7 +59,7 @@ def add_expense(expenses):
             print("Ievadi skaitli no 1 lidz 7.")
 
     while True:
-        amount_input = input("Summa (EUR) (0 - atpakal): ")
+        amount_input = input("Summa (EUR) (0 - atpakaļ): ")
         if amount_input == "0":
             return
         try:
@@ -71,7 +71,7 @@ def add_expense(expenses):
         except ValueError:
             print("Ievadi skaitli, piemeram: 12.50")
 
-    description = input("Apraksts (0 - atpakal): ")
+    description = input("Apraksts (0 - atpakaļ): ")
     if description == "0":
         return
 
@@ -98,16 +98,16 @@ def show_expenses(expenses):
     print(f"Kopa: {sum_total(expenses):.2f} EUR ({len(expenses)} ieraksti)")
 
 def filter_menu(expenses):
-    """Rada pieejamos menesus, filtre un izvada."""
+    """Rāda pieejamos mēnešus, filtrē un izvada."""
     if not expenses:
         print("Nav ierakstu.")
         return
     months = get_available_months(expenses)
-    print("\nPieejamie menesi:")
+    print("\nPieejamie mēneši:")
     for i, (year, month) in enumerate(months, 1):
         print(f"  {i}) {year}-{month:02d}")
     while True:
-        choice = input("Izvēlies menesi (0 - atpakal): ")
+        choice = input("Izvēlies mēneši (0 - atpakaļ): ")
         if choice == "0":
             return
         try:
@@ -123,7 +123,7 @@ def filter_menu(expenses):
             print(f"Ievadi skaitli no 1 lidz {len(months)}.")
 
 def category_summary(expenses):
-    """Rada kopsavilkumu pa kategorijam."""
+    """Rāda kopsavilkumu pa kategorijām."""
     if not expenses:
         print("Nav ierakstu.")
         return
@@ -160,9 +160,9 @@ def export_menu(expenses):
         print("Nav ko eksportēt.")
         return
     print("\n1) Eksportēt pec kategorijas")
-    print("2) Eksportēt pec menesa")
+    print("2) Eksportēt pec mēneša")
     print("3) Eksportēt visu")
-    print("0) Atpakal")
+    print("0) Atpakaļ")
     choice = input("\nIzvēlies (0-3): ")
     if choice == "0":
         return
@@ -171,7 +171,7 @@ def export_menu(expenses):
         for i, cat in enumerate(CATEGORIES, 1):
             print(f"  {i}) {cat}")
         while True:
-            cat_input = input("Izvēlies (1-7) (0 - atpakal): ")
+            cat_input = input("Izvēlies (1-7) (0 - atpakaļ): ")
             if cat_input == "0":
                 return
             try:
@@ -186,11 +186,11 @@ def export_menu(expenses):
                 print("Ievadi skaitli no 1 lidz 7.")
     elif choice == "2":
         months = get_available_months(expenses)
-        print("\nPieejamie menesi:")
+        print("\nPieejamie mēneši:")
         for i, (year, month) in enumerate(months, 1):
             print(f"  {i}) {year}-{month:02d}")
         while True:
-            month_input = input("Izvēlies menesi (0 - atpakal): ")
+            month_input = input("Izvēlies saraksta nr  (0 - atpakaļ): ")
             if month_input == "0":
                 return
             try:
@@ -205,6 +205,8 @@ def export_menu(expenses):
                 print(f"Ievadi skaitli no 1 lidz {len(months)}.")
     elif choice == "3":
         filtered = expenses
+    else:
+        return
 
     filename = input("Faila nosaukums [izdevumi.csv]: ") or "izdevumi.csv"
     if not filename.endswith(".csv"):
