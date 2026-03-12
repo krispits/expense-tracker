@@ -26,14 +26,17 @@ def add_expense(expenses):
     """Ievada jaunu izdevumu / validācija."""
     today = date.today().strftime("%Y-%m-%d")
     while True:
-        date_input = input(f"Datums (YYYY-MM-DD) [{today}] (0 - atpakal): ") or today
+        date_input = input(f"Datums (YYYY-MM-DD vai DD.MM.YYYY) vai enter [{today}] (0 - atpakal): ") or today
         if date_input == "0":
             return
         try:
-            datetime.strptime(date_input, "%Y-%m-%d")
+            if "." in date_input:
+                date_input = datetime.strptime(date_input, "%d.%m.%Y").strftime("%Y-%m-%d")
+            else:
+                datetime.strptime(date_input, "%Y-%m-%d")
             break
         except ValueError:
-            print("Nepareizs datums. Ievadi formata YYYY-MM-DD, piemeram: 2025-03-12")
+            print("Nepareizs datums. Ievadi formata YYYY-MM-DD vai DD.MM.YYYY")
 
     print("\nKategorija:")
     for i, cat in enumerate(CATEGORIES, 1):
@@ -60,7 +63,7 @@ def add_expense(expenses):
         try:
             amount = float(amount_input)
             if amount <= 0:
-                print("Summai jabut pozitivam skaitlim.")
+                print("Summai jābut pozitīvam skaitlim.")
                 continue
             break
         except ValueError:
